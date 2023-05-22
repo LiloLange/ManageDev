@@ -1,0 +1,60 @@
+<RCC>
+    <qresource prefix="/resources">
+        <file alias="gui/index.html">./gui.html</file>
+
+        <file alias="gui/css/main.css">../res_gui/css/main.css</file>
+        <file alias="gui/css/main.css.map">../res_gui/css/main.css.map</file>
+
+        <file alias="gui/js/main.js">../res_gui/js/main.js</file>
+        <file alias="gui/js/qwebchannel.js">../res_gui/js/qwebchannel.js</file>
+        <file alias="gui/js/three.js">../res_gui/js/three.js</file>
+        <file alias="gui/js/OrbitControls.js">../res_gui/js/OrbitControls.js</file>
+        <file alias="gui/js/moment.min.js">../res_gui/js/moment.min.js</file>
+
+        <file alias="gui/img/color_bar.png">../res_gui/img/color_bar.png</file>
+        <file alias="gui/img/cog.png">../res_gui/img/cog.png</file>
+        <file alias="gui/img/3d.png">../res_gui/img/3d.png</file>
+
+        <file alias="gui/img/BodyfitterLogo.png">../res_gui/img/BodyfitterLogo.png</file>
+        <file alias="gui/img/BodyfitterLogo_black.png">../res_gui/img/BodyfitterLogo_black.png</file>
+        <file alias="gui/img/MundoMattress.png">../res_gui/img/MundoMattress.png</file>
+        <file alias="gui/img/MundoMattress_blue.svg">../res_gui/img/MundoMattress_blue.svg</file>
+        
+        <file alias="gui/base/demo_imperial.json">../res_gui/base/demo_imperial.json</file>
+        <file alias="gui/base/demo_metric.json">../res_gui/base/demo_metric.json</file>
+        <file alias="gui/base/preset_english.json">../res_gui/base/preset_english.json</file>
+        <file alias="gui/base/preset_russian.json">../res_gui/base/preset_russian.json</file>
+        <file alias="gui/base/preset_portuguese.json">../res_gui/base/preset_portuguese.json</file>
+        <file alias="gui/base/preset_spanish.json">../res_gui/base/preset_spanish.json</file>
+
+        <file alias="gui/email_template/ap.jpg">../res_gui/email_template/ap.jpg</file>
+        <file alias="gui/email_template/mp.jpg">../res_gui/email_template/mp.jpg</file>
+        <file alias="gui/email_template/sa.jpg">../res_gui/email_template/sa.jpg</file>
+        <file alias="gui/email_template/icon_facebook.png">../res_gui/email_template/icon_facebook.png</file>
+        <file alias="gui/email_template/icon_linkedin.png">../res_gui/email_template/icon_linkedin.png</file>
+
+        <file alias="gui/email_template/bf.png">../res_gui/email_template/bf.png</file>
+        <file alias="gui/email_template/mm.png">../res_gui/email_template/mm.png</file>
+    </qresource>
+
+    <qresource prefix="/resources/starter">
+        <file alias="index.html">./starter.html</file>
+
+        <file alias="js/main.js">../res_starter/public/js/main.js</file>
+        <file alias="js/qwebchannel.js">../res_starter/public/js/qwebchannel.js</file>
+        <file alias="js/wasm_base64.js">../res_gui_wasm/wasm_base64.js</file>
+        <file alias="js/wasm_exec.js">../res_gui_wasm/wasm_exec.js</file>
+
+        <file alias="css/main.css">../res_starter/public/css/main.css</file>
+        <file alias="css/main.css.map">../res_starter/public/css/main.css.map</file>
+
+        <file alias="img/tactilus.png">../res_starter/public/img/tactilus.png</file>
+        <file alias="img/bodyfitter.png">../res_starter/public/img/bodyfitter.png</file>
+        <file alias="img/spi.png">../res_starter/public/img/spi.png</file>
+    </qresource>
+
+    <qresource prefix="/resources/db">
+        <file alias="licensenumbers.dat">../resources/licensenumbers.dat</file>
+    </qresource>
+
+</RCC>

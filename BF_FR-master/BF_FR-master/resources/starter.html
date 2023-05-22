@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1"/>
+    <meta name="format-detection" content="telephone=no">
+    <title>TCL GUI</title>
+    <link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<script src="js/qwebchannel.js"></script>
+<script src="js/wasm_exec.js"></script>
+<script src="js/wasm_base64.js"></script>
+<!--<script src="js/hmac-sha512.js"></script>-->
+<!--<script src="base/preset.json"></script>
+<script src="base/demo.json"></script> -->
+<script src="../port.json"></script>
+<script>
+    if (window.wsURL === undefined) {
+        window.wsURL = 'ws://localhost:12345';
+    }
+    //window.wsURL = 'ws://192.168.50.228:12345';
+    //window.wsURL = 'ws://100.2.116.106:12345';
+    window.socket = null;
+    window.starter = null;
+    window.channel = null;
+
+    window.testMode = false;
+    window.logo = 'bodyfitter'; //'tactilus'; 'spi'; 'bodyfitter'
+
+    let ReactCreated = false;
+    function StartReact() {
+        if (ReactCreated == false) {
+            let script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'js/main.js';
+            document.getElementsByTagName('body')[0].appendChild(script);
+            ReactCreated = true;
+        }
+    }
+
+    function _base64ToArrayBuffer(base64) {
+        let binary_string = window.atob(base64);
+        let len = binary_string.length;
+        let bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binary_string.charCodeAt(i);
+        }
+        return bytes.buffer;
+    }
+
+    function InitCoreSec() {
+        const go = new Go();
+        WebAssembly.instantiate(_base64ToArrayBuffer(window.wasm_script), go.importObject).then((result) => {
+            go.run(result.instance);
+            window.socket = new WebSocket(window.wsURL);
+            window.socket.onclose = function() {
+                console.error('Web socket closed.');
+                window.setTimeout(() => {InitCoreSec();}, 100);
+            };
+            window.socket.onerror = function(error) {
+                console.error('Web socket error: '+error);
+            };
+            window.socket.onmessage = function(message) {
+                let m = JSON.parse(message.data);
+                if (m.step == 1) {
+                    console.log('Dynamic key was received');
+                    genKey(m.key, (err, message) => {
+                        let token = message;
+                        let request = {'cmd': 'verifytoken', 'token': token};
+                        window.socket.send(JSON.stringify(request));
+                        console.log('Token was sent');
+                    });
+                }
+                if (m.step == 2) {
+                    if (m.result == 'ok') {
+                        console.log('Authentication was passed');
+                        if (window.channel === null) {
+                            window.channel = new QWebChannel(window.socket, function (channel) {
+                                window.starter = channel.objects.starter;
+                                console.log('Web channel created');
+                                StartReact();
+                                window.channel.objects.mainwindow.readyToShow();
+                            });
+                        } else {
+                            window.channel.reconnect(window.socket);
+                        }
+                    } else {
+                        console.log('Authentication was not passed');
+                    }
+                }
+            };
+
+            window.socket.onopen = function(){
+                console.log('Web socket connected');
+                let request = {'cmd' : 'getdynamickey'};
+                window.socket.send(JSON.stringify(request));
+                console.log('Dynamic key was requested');
+            };
+        });
+    }
+
+    function InitCore() {
+        window.socket = new WebSocket(window.wsURL);
+        window.socket.onclose = function() {
+            console.error('Web socket closed.');
+            window.setTimeout(() => {InitCore();}, 100);
+        };
+        window.socket.onerror = function(error) {
+            console.error('Web socket error: '+error);
+        };
+        window.socket.onopen = function(message) {
+            console.log('Web socket connected');
+            if (window.channel === null) {
+                window.channel = new QWebChannel(window.socket, function (channel) {
+                    window.starter = channel.objects.starter;
+                    console.log('Web channel created');
+                    StartReact();
+                    window.channel.objects.mainwindow.readyToShow();
+                });
+            } else {
+                window.channel.reconnect(window.socket);
+            }
+        };
+    }
+
+    if (window.testMode) {
+        StartReact();
+    } else {
+        InitCore();
+    }
+
+
+</script>
+    <div class="root" id="root"></div>
+</body>
+</html>

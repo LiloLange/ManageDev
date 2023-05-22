@@ -1,0 +1,21 @@
+[submodule "core"]
+	path = core
+	url = https://github.com/Sensor-Products-Inc/BFcore.git
+[submodule "plugin_dataport"]
+	path = plugin_dataport
+	url = https://github.com/Sensor-Products-Inc/BFpluginDataPort.git
+[submodule "plugin_updater"]
+	path = plugin_updater
+	url = https://github.com/Sensor-Products-Inc/BFpluginUpdater.git
+[submodule "share"]
+	path = share
+	url = https://github.com/Sensor-Products-Inc/BFshared.git
+[submodule "res_gui"]
+	path = res_gui
+	url = https://github.com/Sensor-Products-Inc/BF_FR_GUI.git
+[submodule "res_starter"]
+	path = res_starter
+	url = https://github.com/Sensor-Products-Inc/TCL_GUI_STARTER.git
+[submodule "res_gui_wasm"]
+	path = res_gui_wasm
+	url = https://github.com/Sensor-Products-Inc/TCL_GUI_WASM.git
